@@ -1,4 +1,3 @@
-use chumsky::error::Simple;
 use logos::Logos;
 
 #[derive(Logos, Debug, PartialEq)]
@@ -25,9 +24,11 @@ pub enum Token {
     #[token("cell")]
     Cell,
 
-    Error,
+    #[token(";")]
+    Semicomma,
 }
 
+impl Token {}
 //pub fn lex(input_string: &String) -> impl Iterator<Item = (Token, Simple)> {
 //    let token_iter = Token::lexer(input_string)
 //        .spanned()

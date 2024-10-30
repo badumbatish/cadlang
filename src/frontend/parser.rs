@@ -1,4 +1,4 @@
-use super::lexer::Token;
+use logos::Logos;
 /*
  * Program = Statements*
  *
@@ -50,6 +50,8 @@ use super::lexer::Token;
  */
 // A few type definitions to be used by our parsers below
 
+use super::lexer::Token;
+
 pub trait ProvidingLocation {
     fn get_location() -> logos::Span;
 }
@@ -91,6 +93,10 @@ pub enum BinaryOp {
     LessEqual,
     Greater,
     GreaterEqual,
+    Mul,
+    Exp,
+    Div,
+    Mod,
 }
 pub struct BinaryExpr {
     location: logos::Span,
@@ -99,4 +105,23 @@ pub struct BinaryExpr {
     pri2: PrimitiveExpr,
 }
 
-pub fn parse(s: &String) {}
+pub fn parse(s: &String) {
+    let mut it = Token::lexer(s);
+
+    // Pass iterator with `Result<Token, ()>` item type
+    fn_it1(&mut it);
+}
+
+// Update to expect `Result<Token, ()>`
+pub fn fn_it1<'a, I>(tokens: &mut I)
+where
+    I: Iterator<Item = Result<Token, ()>> + 'a,
+{
+    while let Some(token_result) = tokens.next() {
+        match token_result {
+            Ok(token) => println!("Token: {:?}", token),
+            Err(_) => println!("Error parsing token"),
+        }
+    }
+}
+pub fn fn_it2() {}
